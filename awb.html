@@ -1,0 +1,806 @@
+<html>
+<style type="text/css">
+<!--
+body {
+	margin: 0px;
+}
+.style6 {font-size: 10}
+.style8 {
+	font-family: Verdana, Arial, Helvetica, sans-serif;
+	font-size: 10px;
+	font-weight: bold;
+}
+.style10 {font-size: 10px; font-family: Verdana, Arial, Helvetica, sans-serif; }
+.style11 {
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 10px;
+}
+.style2 {color: #FFFFFF}
+.style4 {
+	font-size:10px;
+	color: #000000;
+	font-family: Verdana, Arial, Helvetica, sans-serif;
+	font-weight: bold;
+}
+.style5 {font-family: Verdana, Arial, Helvetica, sans-serif;
+	font-size: 10px;
+	color: #000000;
+}
+.style12 {font-family: Arial, Helvetica, sans-serif; font-size: 10px; color: #FFFFFF; }
+.style13 {font-family: Verdana, Arial, Helvetica, sans-serif; font-size: 10px; font-weight: bold; color: #FFFFFF; }
+-->
+</style>
+<script type="text/javascript">
+var TAXES = 0.12;
+var TACA_TFPD = 0.01323
+var TACA_TFCS = 0.0268
+var TACA_CF = 2
+var TACA_SECURITY = 0
+var TACA_FUEL = 0
+var TACA_GUA_JFK_MIN = 87.50  
+var TACA_GUA_JFK__100 = 2.58
+var TACA_GUA_JFK_100 = 1.45
+var TACA_GUA_JFK_300 = 1.45
+var TACA_GUA_JFK_500 = 1.45
+
+var TACA_GUA_MGA_MIN = 87.50
+var TACA_GUA_MGA__100 = 0.91
+var	TACA_GUA_MGA_100 = 0.84
+var TACA_GUA_MGA_300 = 0.84
+var TACA_GUA_MGA_500 = 0.84
+
+var TACA_GUA_PTY_MIN = 87.50
+var TACA_GUA_PTY__100 = 1.35
+var	TACA_GUA_PTY_100 = 0.96
+var TACA_GUA_PTY_300 = 0.90
+var TACA_GUA_PTY_500 = 0.90
+
+var TACA_GUA_SAL_MIN = 87.50
+var TACA_GUA_SAL__100 = 0.79
+var	TACA_GUA_SAL_100 = 0.74
+var TACA_GUA_SAL_300 = 0.74
+var TACA_GUA_SAL_500 = 0.74
+
+var TACA_GUA_SJO_MIN = 87.50
+var TACA_GUA_SJO__100 = 0.95
+var	TACA_GUA_SJO_100 = 0.75
+var TACA_GUA_SJO_300 = 0.75
+var TACA_GUA_SJO_500 = 0.75
+
+var TACA_GUA_MEX_MIN = 87.50
+var TACA_GUA_MEX__100 = 1.30
+var	TACA_GUA_MEX_100 = 1.01
+var TACA_GUA_MEX_300 = 0.99
+var TACA_GUA_MEX_500 = 0.99
+
+var TACA_GUA_CCS_MIN = 87.50
+var TACA_GUA_CCS__100 = 1.72
+var	TACA_GUA_CCS_100 = 1.6
+var TACA_GUA_CCS_300 = 1.4
+var TACA_GUA_CCS_500 = 1.4
+
+var COPA_TFPD = 0.01323
+var COPA_TFCS = 0.0268
+var COPA_CF = 2
+var COPA_SECURITY = 0.05
+var COPA_FUEL = 0.18
+var COPA_GUA_JFK_MIN = 60  
+var COPA_GUA_JFK__100 = 1.60
+var COPA_GUA_JFK_100 = 1.50
+var COPA_GUA_JFK_300 = 1.20
+var COPA_GUA_JFK_500 = 1.10
+
+var COPA_GUA_MGA_MIN = 60
+var COPA_GUA_MGA__100 = 0.53
+var	COPA_GUA_MGA_100 = 0.44
+var COPA_GUA_MGA_300 = 0.44
+var COPA_GUA_MGA_500 = 0.44
+
+var COPA_GUA_PTY_MIN = 60
+var COPA_GUA_PTY__100 = 0.75
+var	COPA_GUA_PTY_100 = 0.60
+var COPA_GUA_PTY_300 = 0.60
+var COPA_GUA_PTY_500 = 0.60
+
+var COPA_GUA_SAL_MIN = 60
+var COPA_GUA_SAL__100 = 0.38
+var	COPA_GUA_SAL_100 = 0.34
+var COPA_GUA_SAL_300 = 0.34
+var COPA_GUA_SAL_500 = 0.34
+
+var COPA_GUA_SJO_MIN = 60
+var COPA_GUA_SJO__100 = 0.55
+var	COPA_GUA_SJO_100 = 0.50
+var COPA_GUA_SJO_300 = 0.44
+var COPA_GUA_SJO_500 = 0.41
+
+var COPA_GUA_MEX_MIN = 60
+var COPA_GUA_MEX__100 = 0.95
+var	COPA_GUA_MEX_100 = 0.65
+var COPA_GUA_MEX_300 = 0.55
+var COPA_GUA_MEX_500 = 0.55
+
+var COPA_GUA_CCS_MIN = 60
+var COPA_GUA_CCS__100 = 1.95
+var	COPA_GUA_CCS_100 = 1.65
+var COPA_GUA_CCS_300 = 1.35
+var COPA_GUA_CCS_500 = 1.30
+
+var CommoditiesCode = new Array();
+var CommoditiesName = new Array();
+var CommoditiesType = new Array();
+
+CommoditiesCode[0]="0007";	CommoditiesName[0]="FRUTAS";	CommoditiesType[0]=1;
+CommoditiesCode[1]="0009";	CommoditiesName[1]="COMESTIBLES";	CommoditiesType[1]=1;
+CommoditiesCode[2]="0018";	CommoditiesName[2]="ESPEARRAGO";	CommoditiesType[2]=1;
+CommoditiesCode[3]="0025";	CommoditiesName[3]="PINAS";	CommoditiesType[3]=1;
+CommoditiesCode[4]="0005";	CommoditiesName[4]="DULCES, CHOCOLATES, GALLETAS";	CommoditiesType[4]=1;
+CommoditiesCode[5]="0110";	CommoditiesName[5]="BEBIDAS";	CommoditiesType[5]=1;
+CommoditiesCode[6]="0129";	CommoditiesName[6]="LICORES,VINOS,CERVEZAS";	CommoditiesType[6]=1;
+CommoditiesCode[7]="0180";	CommoditiesName[7]="CAFÉ";	CommoditiesType[7]=1;
+CommoditiesCode[8]="0192";	CommoditiesName[8]="JUGOS DE FRUTAS";	CommoditiesType[8]=1;
+CommoditiesCode[9]="0203";	CommoditiesName[9]="LECHE";	CommoditiesType[9]=1;
+CommoditiesCode[10]="0220";	CommoditiesName[10]="QUESO";	CommoditiesType[10]=1;
+CommoditiesCode[11]="0230";	CommoditiesName[11]="HUEVOS";	CommoditiesType[11]=1;
+CommoditiesCode[12]="0370";	CommoditiesName[12]="ALETA DE TIBURON";	CommoditiesType[12]=1;
+CommoditiesCode[13]="0420";	CommoditiesName[13]="BANANAS";	CommoditiesType[13]=1;
+CommoditiesCode[14]="0422";	CommoditiesName[14]="LIMAS, LIMONES";	CommoditiesType[14]=1;
+CommoditiesCode[15]="0460";	CommoditiesName[15]="MANGOS";	CommoditiesType[15]=1;
+CommoditiesCode[16]="0509";	CommoditiesName[16]="HARINA";	CommoditiesType[16]=1;
+CommoditiesCode[17]="0552";	CommoditiesName[17]="GRANOS Y CEREALES";	CommoditiesType[17]=1;
+CommoditiesCode[18]="0601";	CommoditiesName[18]="CARNE FRESCA O CONGELADA";	CommoditiesType[18]=1;
+CommoditiesCode[19]="0603";	CommoditiesName[19]="CARNE DE MARISCOS";	CommoditiesType[19]=1;
+CommoditiesCode[20]="0651";	CommoditiesName[20]="CERDO Y/O POLLO CONGELADO";	CommoditiesType[20]=1;
+CommoditiesCode[21]="0700";	CommoditiesName[21]="RAICES, ESPECIES";	CommoditiesType[21]=1;
+CommoditiesCode[22]="0800";	CommoditiesName[22]="VEGETALES";	CommoditiesType[22]=1;
+CommoditiesCode[23]="1024";	CommoditiesName[23]="PECES VIVOS";	CommoditiesType[23]=1;
+CommoditiesCode[24]="1200";	CommoditiesName[24]="CUERO";	CommoditiesType[24]=1;
+CommoditiesCode[25]="1201";	CommoditiesName[25]="ARTICULOS DE CUERO";	CommoditiesType[25]=1;
+CommoditiesCode[26]="1352";	CommoditiesName[26]="RESINAS";	CommoditiesType[26]=1;
+CommoditiesCode[27]="1400";	CommoditiesName[27]="SEMILLAS DE FLORES";	CommoditiesType[27]=1;
+CommoditiesCode[28]="1403";	CommoditiesName[28]="FOLLAJE";	CommoditiesType[28]=1;
+CommoditiesCode[29]="1420";	CommoditiesName[29]="FLORES";	CommoditiesType[29]=1;
+CommoditiesCode[30]="1440";	CommoditiesName[30]="FLORES CORTADAS";	CommoditiesType[30]=1;
+CommoditiesCode[31]="1470";	CommoditiesName[31]="PLANTAS ORNAMENTALES";	CommoditiesType[31]=1;
+CommoditiesCode[32]="1471";	CommoditiesName[32]="HELECHO";	CommoditiesType[32]=1;
+CommoditiesCode[33]="1475";	CommoditiesName[33]="PLANTAS  ";	CommoditiesType[33]=1;
+CommoditiesCode[34]="1485";	CommoditiesName[34]="SEMILLAS  ";	CommoditiesType[34]=1;
+CommoditiesCode[35]="1499";	CommoditiesName[35]="PLANTAS FLORALES";	CommoditiesType[35]=1;
+CommoditiesCode[36]="1500";	CommoditiesName[36]="HIERBAS, HOJAS";	CommoditiesType[36]=1;
+CommoditiesCode[37]="1550";	CommoditiesName[37]="TABACO";	CommoditiesType[37]=1;
+CommoditiesCode[38]="1565";	CommoditiesName[38]="PRODUCTOS DE TABACO";	CommoditiesType[38]=1;
+CommoditiesCode[39]="1700";	CommoditiesName[39]="ACEITES (DE ORIGEN ANIMAL O VEGETAL)";	CommoditiesType[39]=1;
+CommoditiesCode[40]="2001";	CommoditiesName[40]="HILO";	CommoditiesType[40]=2;
+CommoditiesCode[41]="1002";	CommoditiesName[41]="FIBRAS DE HILO";	CommoditiesType[41]=2;
+CommoditiesCode[42]="2192";	CommoditiesName[42]="FUSTES DE SOMBRERO";	CommoditiesType[42]=2;
+CommoditiesCode[43]="2195";	CommoditiesName[43]="BULTOS DE LANA";	CommoditiesType[43]=2;
+CommoditiesCode[44]="2196";	CommoditiesName[44]="TELAS, FIBRAS TEXTILES";	CommoditiesType[44]=2;
+CommoditiesCode[45]="2199";	CommoditiesName[45]="TELAS NATURALES O SINTETICAS";	CommoditiesType[45]=2;
+CommoditiesCode[46]="2200";	CommoditiesName[46]="ROPA CONFECCINADA";	CommoditiesType[46]=2;
+CommoditiesCode[47]="2244";	CommoditiesName[47]="ELASTICO, PRODUCTOS DE ELASTICO";	CommoditiesType[47]=2;
+CommoditiesCode[48]="2259";	CommoditiesName[48]="ROPA SEMITERMINADA";	CommoditiesType[48]=2;
+CommoditiesCode[49]="2350";	CommoditiesName[49]="SOMBREROS";	CommoditiesType[49]=2;
+CommoditiesCode[50]="2415";	CommoditiesName[50]="ZAPATOS";	CommoditiesType[50]=2;
+CommoditiesCode[51]="2600";	CommoditiesName[51]="ARTICULOS TEXTILES";	CommoditiesType[51]=2;
+CommoditiesCode[52]="3002";	CommoditiesName[52]="METALES";	CommoditiesType[52]=2;
+CommoditiesCode[53]="3025";	CommoditiesName[53]="METALES PRECIOSOS";	CommoditiesType[53]=2;
+CommoditiesCode[54]="3100";	CommoditiesName[54]="CUCHILLERIA";	CommoditiesType[54]=2;
+CommoditiesCode[55]="3126";	CommoditiesName[55]="HOJAS DE AFEITAR";	CommoditiesType[55]=2;
+CommoditiesCode[56]="3200";	CommoditiesName[56]="HERRAMIENTAS";	CommoditiesType[56]=2;
+CommoditiesCode[57]="3300";	CommoditiesName[57]="HERRAMIENTAS, FERRETERIA";	CommoditiesType[57]=2;
+CommoditiesCode[58]="3411";	CommoditiesName[58]="UTENSILIOS PARA LA CASA";	CommoditiesType[58]=2;
+CommoditiesCode[59]="3500";	CommoditiesName[59]="MUEBLES DE METAL";	CommoditiesType[59]=2;
+CommoditiesCode[60]="3900";	CommoditiesName[60]="PRODUCTOS DE METAL";	CommoditiesType[60]=2;
+CommoditiesCode[61]="4000";	CommoditiesName[61]="MOTORES";	CommoditiesType[61]=2;
+CommoditiesCode[62]="4010";	CommoditiesName[62]="EQUIPO INDUSTRIAL";	CommoditiesType[62]=2;
+CommoditiesCode[63]="4108";	CommoditiesName[63]="PARTES DE AVION";	CommoditiesType[63]=2;
+CommoditiesCode[64]="4201";	CommoditiesName[64]="VEHICULOS";	CommoditiesType[64]=2;
+CommoditiesCode[65]="4204";	CommoditiesName[65]="PARTES DE MOTOR Y/O MAQUINARIA";	CommoditiesType[65]=2;
+CommoditiesCode[66]="4211";	CommoditiesName[66]="PARTES DE AUTOMOVIL";	CommoditiesType[66]=2;
+CommoditiesCode[67]="4228";	CommoditiesName[67]="MOTOCICLETAS, BICICLETAS";	CommoditiesType[67]=2;
+CommoditiesCode[68]="4300";	CommoditiesName[68]="MAQUINARIA Y EQUIPO DE OFICINA";	CommoditiesType[68]=2;
+CommoditiesCode[69]="4314";	CommoditiesName[69]="COMPONENTES ELECTRONICOS";	CommoditiesType[69]=2;
+CommoditiesCode[70]="4329";	CommoditiesName[70]="PRODUCTOS ELECTRONICOS";	CommoditiesType[70]=2;
+CommoditiesCode[71]="4400";	CommoditiesName[71]="EQUIPO ELECTRICO";	CommoditiesType[71]=2;
+CommoditiesCode[72]="4402";	CommoditiesName[72]="ARTICULOS ELECTRONICOS EXEPTUANDO LOS DE OFICINA";	CommoditiesType[72]=2;
+CommoditiesCode[73]="4404";	CommoditiesName[73]="ARTICULOS ELECTRONICOS";	CommoditiesType[73]=2;
+CommoditiesCode[74]="4419";	CommoditiesName[74]="EQUIPO ELECTRONICO, RADIOS";	CommoditiesType[74]=2;
+CommoditiesCode[75]="4435";	CommoditiesName[75]="TUBOS ELECTRONICOS, TRANSITORES";	CommoditiesType[75]=2;
+CommoditiesCode[76]="4450";	CommoditiesName[76]="ENSERES DOMESTICOS";	CommoditiesType[76]=2;
+CommoditiesCode[77]="4477";	CommoditiesName[77]="ALAMBRES Y CABLES ELECTRICOS";	CommoditiesType[77]=2;
+CommoditiesCode[78]="4560";	CommoditiesName[78]="TRANSFORMADORES ELECTRICOS";	CommoditiesType[78]=2;
+CommoditiesCode[79]="4700";	CommoditiesName[79]="MAQUINAS, HERRAMIENTAS";	CommoditiesType[79]=2;
+CommoditiesCode[80]="4711";	CommoditiesName[80]="PARTES DE MAQUINA";	CommoditiesType[80]=2;
+CommoditiesCode[81]="4722";	CommoditiesName[81]="MAQUINARIA PARA CONSTRUCCION";	CommoditiesType[81]=2;
+CommoditiesCode[82]="4811";	CommoditiesName[82]="HERRAMIENTA DE MAQUINAS";	CommoditiesType[82]=2;
+CommoditiesCode[83]="5050";	CommoditiesName[83]="ABRASIVOS, PRODUCTOS ABRASIVOS";	CommoditiesType[83]=2;
+CommoditiesCode[84]="5210";	CommoditiesName[84]="ALFARERIA";	CommoditiesType[84]=2;
+CommoditiesCode[85]="5292";	CommoditiesName[85]="CERAMICA";	CommoditiesType[85]=2;
+CommoditiesCode[86]="5300";	CommoditiesName[86]="VIDRIO, PRODUCTOS DE VIDRIO";	CommoditiesType[86]=2;
+CommoditiesCode[87]="5620";	CommoditiesName[87]="ACEITES (DE ORIGEN ANIMAL O VEGETAL)";	CommoditiesType[87]=2;
+CommoditiesCode[88]="5800";	CommoditiesName[88]="ROCAS, PIEDRAS";	CommoditiesType[88]=2;
+CommoditiesCode[89]="6000";	CommoditiesName[89]="QUIMICOS";	CommoditiesType[89]=2;
+CommoditiesCode[90]="6001";	CommoditiesName[90]="QUIMICOS, FRAMACEUTICOS";	CommoditiesType[90]=2;
+CommoditiesCode[91]="6100";	CommoditiesName[91]="MUESTRAS BIOLOGICAS, SANGRE HUMANA";	CommoditiesType[91]=2;
+CommoditiesCode[92]="6206";	CommoditiesName[92]="COLORANTES";	CommoditiesType[92]=2;
+CommoditiesCode[93]="6495";	CommoditiesName[93]="DROGAS, INSECTICIDAS";	CommoditiesType[93]=2;
+CommoditiesCode[94]="6500";	CommoditiesName[94]="MEDICINAS Y FARMACOS";	CommoditiesType[94]=2;
+CommoditiesCode[95]="6501";	CommoditiesName[95]="FARMACOS PARA VETERINARIA";	CommoditiesType[95]=2;
+CommoditiesCode[96]="6600";	CommoditiesName[96]="COSMETICOS, JABONES";	CommoditiesType[96]=2;
+CommoditiesCode[97]="6601";	CommoditiesName[97]="ARTICULOS DE TOCADOR";	CommoditiesType[97]=2;
+CommoditiesCode[98]="6630";	CommoditiesName[98]="PERFUMES";	CommoditiesType[98]=2;
+CommoditiesCode[99]="6807";	CommoditiesName[99]="ROLLOS PLASTICOS";	CommoditiesType[99]=2;
+CommoditiesCode[100]="6810";	CommoditiesName[100]="ARTICULOS DE PLASTICOS";	CommoditiesType[100]=2;
+CommoditiesCode[101]="6827";	CommoditiesName[101]="TAPETES PLASTICOS";	CommoditiesType[101]=2;
+CommoditiesCode[102]="6847";	CommoditiesName[102]="BOLSAS, ROLLOS PARA ENVOLVER";	CommoditiesType[102]=2;
+CommoditiesCode[103]="6859";	CommoditiesName[103]="JUGUETES";	CommoditiesType[103]=2;
+CommoditiesCode[104]="6902";	CommoditiesName[104]="LIMPIADORES, PRODUCTOS DE LIMPIEZA";	CommoditiesType[104]=2;
+CommoditiesCode[105]="7000";	CommoditiesName[105]="PAPEL, PRODUCTOS DE PAPEL";	CommoditiesType[105]=2;
+CommoditiesCode[106]="7001";	CommoditiesName[106]="PAPEL EN HOJAS O ROLLOS";	CommoditiesType[106]=2;
+CommoditiesCode[107]="7021";	CommoditiesName[107]="PAPEL PARA EMPAQUE";	CommoditiesType[107]=2;
+CommoditiesCode[108]="7100";	CommoditiesName[108]="ARTICULOS IMPRESOS";	CommoditiesType[108]=2;
+CommoditiesCode[109]="7124";	CommoditiesName[109]="DUCUMENTOS";	CommoditiesType[109]=2;
+CommoditiesCode[110]="7183";	CommoditiesName[110]="CALENDARIOS";	CommoditiesType[110]=2;
+CommoditiesCode[111]="7400";	CommoditiesName[111]="ARTICULOS DE CAUCHO";	CommoditiesType[111]=2;
+CommoditiesCode[112]="7600";	CommoditiesName[112]="MADERA, PRODUCTOS DE MADERA";	CommoditiesType[112]=2;
+CommoditiesCode[113]="7620";	CommoditiesName[113]="MANOFACTURAS DE MADERA";	CommoditiesType[113]=2;
+CommoditiesCode[114]="7625";	CommoditiesName[114]="MUEBLAJE";	CommoditiesType[114]=2;
+CommoditiesCode[115]="8001";	CommoditiesName[115]="INSTRUMENTOS CIENTIFICOS DE PRECISION";	CommoditiesType[115]=2;
+CommoditiesCode[116]="8100";	CommoditiesName[116]="EQUIPO DENTAL, MEDICO";	CommoditiesType[116]=2;
+CommoditiesCode[117]="8207";	CommoditiesName[117]="INSTRUMENTOS MUSICALES";	CommoditiesType[117]=2;
+CommoditiesCode[118]="8301";	CommoditiesName[118]="INSTRUMENTOS OPTICOS";	CommoditiesType[118]=2;
+CommoditiesCode[119]="8420";	CommoditiesName[119]="FILMS";	CommoditiesType[119]=2;
+CommoditiesCode[120]="8424";	CommoditiesName[120]="ARTICULOS DE ENTRETENIMIENTO";	CommoditiesType[120]=2;
+CommoditiesCode[121]="8911";	CommoditiesName[121]="RELOJES";	CommoditiesType[121]=2;
+CommoditiesCode[122]="9001";	CommoditiesName[122]="JOYERIA, IMITACION DE ALHAJAS";	CommoditiesType[122]=2;
+CommoditiesCode[123]="9006";	CommoditiesName[123]="ADORNOS";	CommoditiesType[123]=2;
+CommoditiesCode[124]="9072";	CommoditiesName[124]="CAJAS VACIAS";	CommoditiesType[124]=2;
+CommoditiesCode[125]="9200";	CommoditiesName[125]="EQUIPO Y ARTICULOS DEPORTIVOS";	CommoditiesType[125]=2;
+CommoditiesCode[126]="9241";	CommoditiesName[126]="EQUIPO DE PESCA";	CommoditiesType[126]=2;
+CommoditiesCode[127]="9300";	CommoditiesName[127]="ARMAS DE FUEGO, MUNICIONES";	CommoditiesType[127]=2;
+CommoditiesCode[128]="9315";	CommoditiesName[128]="PISTOLAS";	CommoditiesType[128]=2;
+CommoditiesCode[129]="9400";	CommoditiesName[129]="ARTICULOS DE OFICINA";	CommoditiesType[129]=2;
+CommoditiesCode[130]="9508";	CommoditiesName[130]="SOUVENIRS";	CommoditiesType[130]=2;
+CommoditiesCode[131]="9513";	CommoditiesName[131]="ARTESANIAS";	CommoditiesType[131]=2;
+CommoditiesCode[132]="9516";	CommoditiesName[132]="ARTESANIAS DE METAL O VIDRIO";	CommoditiesType[132]=2;
+CommoditiesCode[133]="9550";	CommoditiesName[133]="CANDELAS";	CommoditiesType[133]=2;
+CommoditiesCode[134]="9601";	CommoditiesName[134]="CIGARRILLOS, FILTROS DE CIGARRO";	CommoditiesType[134]=2;
+CommoditiesCode[135]="9740";	CommoditiesName[135]="COMESTIBLES, BEBIDAS";	CommoditiesType[135]=2;
+CommoditiesCode[136]="9980";	CommoditiesName[136]="EFECTOS PERSONALES";	CommoditiesType[136]=2;
+CommoditiesCode[137]="9985";	CommoditiesName[137]="CARGA CONSOLIDADA";	CommoditiesType[137]=2;
+CommoditiesCode[138]="9990";	CommoditiesName[138]="CORREO";	CommoditiesType[138]=2;
+
+
+function GetCommodityName(obj, destination, weights, types){
+var Vals = obj.value.split("\r\n");
+var Values = "";
+var NameVals = "";
+var TypeVals = "";
+var Val = "";
+
+	for (i=0;i<Vals.length;i++) { 
+		if (Vals[i] != ""){
+			if (Vals[i].length == 1) {
+				Vals[i] = "000" + Vals[i];
+			}
+			if (Vals[i].length == 2) {
+				Vals[i] = "00" + Vals[i];
+			}
+			if (Vals[i].length == 3) {
+				Vals[i] = "0" + Vals[i];
+			}
+			if (Vals[i].length > 4) {
+				alert("Codigo de Carga incorrecto");
+				obj.focus();
+				return(false);
+			}
+			for (j=0;j<CommoditiesCode.length;j++) { 
+				if (CommoditiesCode[j]==Vals[i]){
+					NameVals = NameVals + CommoditiesName[j] + "\r\n"; 
+					Values = Values + Vals[i] + "\r\n";
+					TypeVals = TypeVals + CommoditiesType[j] + ","; 
+				}
+			}			
+		}
+	}
+	if (NameVals == "" && weights.value.length > 0) {
+		alert("Por favor, ingrese un Codigo de Carga");
+		obj.focus();
+		return(false);
+	}	
+	obj.value = Values;
+	destination.value = NameVals;
+	types.value = TypeVals;
+}
+
+function SumVals(obj, destination) {
+var Vals = obj.value.split("\r\n");
+var TotVals = 0;
+var Values = "";
+	for (i=0;i<Vals.length;i++) { 
+		if (Vals[i] != ""){
+			TotVals = TotVals + (Vals[i]*1);
+			Values = Values + Vals[i] + "\r\n"; 
+		}
+	}
+	obj.value = Values;
+	destination.value = Round(TotVals);
+}
+
+function CheckRates(theForm) {
+ if (theForm.ChargeableWeights.value != "") {
+ 	CalcRate(theForm.ChargeableWeights, theForm);
+ }
+}
+
+function CalcRate(obj, theForm) {
+var Weights = obj.value.split("\r\n");
+var CommodityTypes = theForm.CommoditiesTypes.value.split(",");
+var Rate;
+var Weight = "";
+var CarrierRates = ""; 
+var CarrierSubTot = ""; 
+var TotCarrierRate = 0; 
+var TotWeightChargeable = 0;
+var TotWeightChargeableCS = 0;
+var TotWeightChargeablePD = 0;
+var RateName = theForm.Carrier.value + "_" + theForm.AirportDeparture.value + "_" + theForm.AirportDestination.value;
+var MinRate = eval(RateName + "_MIN");
+
+	for (i=0;i<Weights.length;i++) { 
+		if (Weights[i] != "") {
+			Rate = SetRate(Weights[i], RateName)
+			TempRate = Weights[i] * Rate;
+			TempRate = Round(TempRate);
+			if (MinRate > TempRate) {
+				CarrierRates = CarrierRates + MinRate + "\r\n"; 
+				CarrierSubTot = CarrierSubTot + MinRate + "\r\n";
+				TotCarrierRate =  TotCarrierRate + MinRate;
+			} else {
+				CarrierRates = CarrierRates + Rate + "\r\n";
+				CarrierSubTot = CarrierSubTot + TempRate + "\r\n";
+				TotCarrierRate =  TotCarrierRate + TempRate;
+			}
+			Weight = Weight + Weights[i] + "\r\n";
+			TotWeightChargeable = TotWeightChargeable + (Weights[i]*1);
+			
+			if (CommodityTypes[i]==1) {
+				TotWeightChargeablePD = TotWeightChargeablePD + (Weights[i]*1);
+			}
+			if (CommodityTypes[i]==2) {
+				TotWeightChargeableCS = TotWeightChargeableCS + (Weights[i]*1);
+			} 
+		}
+	}
+	obj.value = Weight;
+	theForm.CarrierRates.value = CarrierRates; 
+	theForm.CarrierSubTot.value = CarrierSubTot;
+	theForm.TotCarrierRate.value = Round(TotCarrierRate);
+	theForm.TotWeightChargeable.value = TotWeightChargeable;
+
+	theForm.TerminalFee.value = Round((TotWeightChargeableCS * eval(theForm.Carrier.value + "_TFCS"))+(TotWeightChargeablePD * eval(theForm.Carrier.value + "_TFPD")));
+	theForm.CustomFee.value = Round(eval(theForm.Carrier.value + "_CF"));
+	theForm.FuelSurcharge.value = Round(TotWeightChargeable * eval(theForm.Carrier.value + "_FUEL"));
+	theForm.SecurityFee.value = Round(TotWeightChargeable * eval(theForm.Carrier.value + "_SECURITY"));
+	
+	SumOtherCharges(theForm);
+	AssignChargeWeight(theForm);
+	CalcTax(theForm);
+	CalcTot(theForm);
+}
+
+function Round(value){
+	return (Math.round(value*100)/100);
+}
+
+function SetRate(value, RateName){
+var Rate = 0;
+	if (value < 100) {
+		Rate = eval(RateName + "__100")
+	} else if (value >= 100 && value < 300) {
+		Rate = eval(RateName + "_100")
+	} else if (value >= 300 && value < 500) {
+		Rate = eval(RateName + "_300")
+	} else if (value >= 500) {
+		Rate = eval(RateName + "_500")
+	}
+	return (Rate);
+}
+
+function AssignChargeWeight(theForm){
+	if (theForm.TypeCharge.value == "P") {
+		theForm.TotChargeWeightCollect.value = "";	
+		theForm.TotChargeWeightPrepaid.value = theForm.TotCarrierRate.value;
+	} else {		
+		theForm.TotChargeWeightCollect.value = theForm.TotCarrierRate.value;	
+		theForm.TotChargeWeightPrepaid.value = "";
+	}
+}
+
+function CalcTax(theForm){
+var Result = 0;
+	if (theForm.TypeCharge.value == "P") {
+		Result = Round((theForm.TotChargeWeightPrepaid.value*1 + theForm.PBA.value*1 + theForm.AnotherChargesCarrierPrepaid.value*1)*TAXES);
+		theForm.TotChargeTaxCollect.value = "";	
+		theForm.TotChargeTaxPrepaid.value = Result;
+	} else {		
+		//Result = Round((theForm.TotChargeWeightCollect.value*1 + theForm.PBA.value*1 + theForm.AnotherChargesCarrierCollect.value*1)*TAXES);
+		//theForm.TotChargeTaxCollect.value = Result;	
+		theForm.TotChargeTaxCollect.value = "";	
+		theForm.TotChargeTaxPrepaid.value = "";
+	}
+	theForm.TAX.value = Result;
+};
+
+function SumOtherCharges(theForm){
+var Result = Round(theForm.TerminalFee.value*1 + theForm.CustomFee.value*1 + theForm.FuelSurcharge.value*1 + theForm.SecurityFee.value*1 + theForm.AdditionalChargeVal1.value*1 + theForm.AdditionalChargeVal2.value*1);
+	if (theForm.TypeCharge.value == "P") {
+		theForm.AnotherChargesCarrierCollect.value = "";	
+		theForm.AnotherChargesCarrierPrepaid.value = Result;
+	} else {		
+		theForm.AnotherChargesCarrierCollect.value = Result;	
+		theForm.AnotherChargesCarrierPrepaid.value = "";
+	}	
+};
+
+function AssignPBA(theForm){
+	if (theForm.TypeCharge.value == "P") {
+		theForm.AnotherChargesAgentCollect.value = "";	
+		theForm.AnotherChargesAgentPrepaid.value = theForm.PBA.value;
+	} else {		
+		theForm.AnotherChargesAgentCollect.value = theForm.PBA.value;	
+		theForm.AnotherChargesAgentPrepaid.value = "";
+	}
+}
+
+function ValPBA(theForm){
+	if (theForm.PBA.value < 35){
+		alert("El PBA no puede ser menor de 35");
+		theForm.PBA.focus();		
+	} else {
+		AssignPBA(theForm);
+		CalcTax(theForm);
+		CalcTot(theForm);
+	}
+}
+
+function CalcTot(theForm){
+var Result = 0;
+	if (theForm.TypeCharge.value == "P") {
+		Result = Round(theForm.TotChargeWeightPrepaid.value*1 + theForm.TotChargeTaxPrepaid.value*1 + theForm.PBA.value*1 + theForm.AnotherChargesCarrierPrepaid.value*1);
+		theForm.TotCollect.value = "";	
+		theForm.TotPrepaid.value = Result;
+	} else {		
+		Result = Round(theForm.TotChargeWeightCollect.value*1 + theForm.TotChargeTaxCollect.value*1 + theForm.PBA.value*1 + theForm.AnotherChargesCarrierCollect.value*1);
+		theForm.TotCollect.value = Result;	
+		theForm.TotPrepaid.value = "";
+	}
+};
+
+var numb = "0123456789./\r/\n";
+function res(t,v){
+	var w = "";
+	for (i=0; i < t.value.length; i++) {
+	x = t.value.charAt(i);
+	if (v.indexOf(x,0) != -1)
+		w += x;
+	}
+	t.value = w;
+}
+
+</script>
+<body>
+<form name="AWB">
+<table width="841" border="1" cellpadding="2" cellspacing="0">
+  <tr>
+    <td class="style4" align="right" colspan="3">No. de Cuenta del Embarcador</td>
+    <td class="style4" align="left" bgcolor="#999999" colspan="4"><input class="style10" type="text"></td>
+	<td class="style4" align="right" colspan="3">No. de AWB</td>
+    <td class="style4" align="left" bgcolor="#999999" colspan="2"><input class="style10" type="text"></td>
+ </tr>
+  <tr>
+    <td class="style4" align="center" colspan="7">Nombre y Direccion del Embarcador</td>
+	<td class="style4" align="center" bgcolor="#999999" colspan="5" rowspan="5"></td>
+  </tr>
+  <tr>
+    <td class="style4" align="center" bgcolor="#999999" colspan="7"><textarea class="style10" rows="5"  cols="70"></textarea></td>
+  </tr>
+  <tr>
+    <td class="style4" align="right" colspan="3">No. de Cuenta del Destinatario </td>
+    <td class="style4" align="left" bgcolor="#999999" colspan="4"><input class="style10" type="text"></td>
+  </tr>
+  <tr>
+    <td class="style4" align="center" colspan="7">Nombre y Direccion del Destinatario </td>
+  </tr>
+  <tr>
+    <td class="style4" align="center" bgcolor="#999999" colspan="7"><textarea class="style10" rows="5"  cols="70"></textarea></td>
+  </tr>
+  <tr>
+    <td class="style4" align="center" colspan="7">Agente del Transportista Emisor, Nombre y Ciudad </td>
+	<td class="style4" align="center" colspan="7">Informacion Contable</td>
+  </tr>
+  <tr>
+    <td class="style4" align="center" bgcolor="#999999" colspan="7"><textarea class="style10" rows="5"  cols="70"></textarea></td>
+	<td class="style4" align="center" colspan="7" rowspan="5" bgcolor="#999999" valign="top"><textarea class="style10" rows="5"  cols="70"></textarea></td>
+  </tr>
+  <tr>
+    <td class="style4" align="center" colspan="3">Codigo IATA del Agente </td>
+    <td class="style4" align="center" colspan="4">No. de Cuenta </td>
+  </tr>
+  <tr>
+    <td class="style4" align="center" bgcolor="#999999" colspan="3"><input class="style10" type="text"></td>
+    <td class="style4" align="center" bgcolor="#999999" colspan="4"><input class="style10" type="text"></td>
+  </tr>
+  <tr>
+    <td class="style4" align="center" colspan="3">Aeropuerto de Salida</td>
+    <td class="style4" align="center" colspan="4">Ruta Solicitada </td>
+  </tr>
+  <tr>
+    <td class="style4" align="center" bgcolor="#999999" colspan="3"><select class="style10" name="AirportDeparture"><option value="GUA">LA AURORA GUATEMALA</select></td>
+    <td class="style4" align="center" bgcolor="#999999" colspan="4"><input class="style10" type="text"></td>
+  </tr>
+  
+  <tr>
+    <td class="style4" align="center">A</td>
+    <td class="style4" align="center">1er. Transportista</td>
+    <td class="style4" align="center">A </td>
+    <td class="style4" align="center">Por </td>
+    <td class="style4" align="center">A </td>
+    <td class="style4" align="center">Por </td>
+    <td class="style4" align="center">Moneda </td>
+    <td class="style4" align="center">Codigo<br>
+      Cargos </td>
+    <td class="style4" align="center">Peso/Valor </td>
+    <td class="style4" align="center">Otros </td>
+    <td class="style4" align="center">Valor Declarado<br>
+      para Transporte </td>
+    <td class="style4" align="center">Valor Declarado<br>
+      Aduana </td>
+  </tr>
+  <tr bgcolor="#999999">
+    <td class="style4" align="center"><input class="style10"  type="text" size="6">
+    </td>
+    <td class="style4" align="center">
+	<select class="style10" name="Carrier" onChange="CheckRates(document.forms[0]);">
+	<option value="COPA">COPA AIRLINES
+	<option value="TACA">TACA
+    </select>
+    </td>
+    <td class="style4" align="center"><input class="style10"  type="text" size="6"></td>
+    <td class="style4" align="center"><input class="style10"  type="text" size="6">
+    </td>
+    <td class="style4" align="center"><input class="style10"  type="text" size="6">
+    </td>
+    <td class="style4" align="center"><input class="style10"  type="text" size="6">
+    </td>
+    <td class="style4" align="center">
+	<select class="style10">
+	<option value="USD">USD
+	<option value="QTZ">QTZ
+	</select>	
+    </td>
+    <td class="style4" align="center">
+	<select class="style10" name="TypeCharge" onChange="javascript:SumOtherCharges(document.forms[0]);AssignPBA(document.forms[0]);AssignChargeWeight(document.forms[0]);CalcTax(document.forms[0]);CalcTot(document.forms[0]);">
+	<option value="P">PPD
+	<option value="C">COLL
+	</select>
+    </td>
+    <td class="style4" align="center">
+	<select class="style10" name="TypeValCharge">
+	<option value="P">PPD
+	<option value="C">COLL
+	</select>
+    </td>
+    <td class="style4" align="center">
+	<select class="style10" name="TypeOtherCharge">
+	<option value="P">PPD
+	<option value="C">COLL
+	</select>
+    </td>
+    <td class="style4" align="center"><input class="style10"  type="text" size="10">
+    </td>
+    <td class="style4" align="center"><input class="style10"  type="text" size="10">
+    </td>
+  </tr>
+  <tr>
+    <td class="style4" colspan="8" align="center">Aeropuerto Destino </td>
+    <td class="style4" align="center">Vuelo<br>
+      Fecha </td>
+    <td class="style4" align="center">Vuelo<br>
+      Fecha </td>
+    <td class="style4" colspan="2">Valor Asegurado </td>
+  </tr>
+  <tr bgcolor="#999999">
+    <td class="style4" colspan="8" align="center">
+	<select class="style10" name="AirportDestination" onChange="CheckRates(document.forms[0]);">
+    <option value="JFK">JFK - JOHN F. KENNEDY, NUEVA YORK, ESTADOS UNIDOS
+	<option value="MGA">MGA - MANAGUA, NICARAGUA
+	<option value="PTY">PTY - TOCUMEN, PANAMA
+	<option value="SAL">SAL - COMALAPA, EL SALVADOR
+	<option value="SJO">SJO - JUAN SANTAMARIA - ALAJUELA, COSTA RICA
+	<option value="MEX">MEX - BENITO JUÁREZ GARCÍA - D.F., MEXICO
+	<option value="CCS">CCS - MAIQUETIA SIMON BOLIVAR - CARACAS,VENEZUELA
+	</select>
+    </td>
+    <td class="style4"><input class="style10" type="text" size="6">
+    </td>
+    <td class="style4"><input class="style10" type="text" size="6">
+    </td>
+    <td class="style4" colspan="2"><input class="style10" type="text" size="10">
+    </td>
+  </tr>
+  <tr>
+    <td class="style4" colspan="7" align="center">Informacion Manejo </td>
+    <td class="style4" colspan="5" align="center">Observacion </td>
+  </tr>
+  <tr bgcolor="#999999">
+    <td height="71" colspan="7" align="center" class="style4"><textarea class="style10" rows="4" cols="70"></textarea></td>
+    <td class="style4" colspan="5" align="center"><textarea class="style10" rows="4" cols="67"></textarea>
+    </td>
+  </tr>
+</table>
+<table width="842" height="309" border="1" cellpadding="0" cellspacing="0">
+	<tr>
+		<td width="72" class="style4" align="center">No. Bultos</td>
+		<td width="72" class="style4" align="center">Peso Bruto</td>
+		<td width="39" class="style4" align="center">kg / lb</td>
+		<td width="68" class="style4" align="center">Commodity Item No. </td>
+		<td width="164" class="style4" align="center">Peso a Cobrar</td>
+		<td width="87" class="style4" align="center">Tarifa / Cargo</td>
+		<td width="73" class="style4" align="center">Total</td>
+		<td width="249" class="style4" align="center">Naturaleza y Cantidad<br>de la Mercancia</td>		
+	</tr>
+	<tr bgcolor="#999999">
+	    <td height="279" valign="top" class="style4">
+		<textarea class="style10" cols="15" rows="20" wrap="off" name="NoOfPieces" onBlur="javascript:SumVals(this, document.forms[0].TotNoOfPieces);" onKeyUp="res(this,numb);"></textarea><br><input class="style10" name="TotNoOfPieces"  type="text" size="15" readonly>
+	  </td>
+	  <td class="style4" valign="top">
+	  <textarea class="style10"  cols="15" rows="20" wrap="off" name="Weights"  onBlur="javascript:SumVals(this, document.forms[0].TotWeight);" onKeyUp="res(this,numb);"></textarea><br><input class="style10"  type="text" size="15" name="TotWeight" readonly>
+	  </td>
+		<td class="style4" valign="top">
+		<textarea class="style10"  cols="4" rows="20" wrap="off"></textarea>
+		</td>
+		<td class="style4" valign="top">
+		<textarea class="style10"  cols="6" rows="20" wrap="off" name="Commodities" onKeyUp="res(this,numb);" onBlur="javascript:GetCommodityName(this, document.forms[0].NatureQtyGoods, document.forms[0].Weights, document.forms[0].CommoditiesTypes); "></textarea>
+		<input type="hidden" name="CommoditiesTypes">
+		</td>
+		<td class="style4" valign="top">
+          <input type="hidden" name="TotWeightChargeable">		
+          <textarea class="style10"  cols="15" rows="20" wrap="off" name="ChargeableWeights" onBlur="javascript:CalcRate(this, document.forms[0]);" onKeyUp="res(this,numb);"></textarea>
+	  </td>
+		<td class="style4" valign="top">
+		<textarea class="style10"  cols="14" rows="20" wrap="off" name="CarrierRates" readonly></textarea>
+		</td>
+		<td class="style4" valign="top">
+		<textarea class="style10"  cols="15" rows="20" wrap="off" name="CarrierSubTot" readonly></textarea><br><input class="style10" name="TotCarrierRate" type="text" size="15" readonly>
+		</td>
+		<td class="style4" valign="top">
+		<textarea class="style10"  cols="44" rows="20" wrap="off" name="NatureQtyGoods"></textarea>
+		</td>		
+	</tr>
+</table>
+
+
+
+<table width="841" border="1" cellpadding="2" cellspacing="0">
+  <tr>
+    <td width="168" align="center" class="style4">PAGADO / Prepaid</td>
+    <td width="165" align="center" class="style4">DEBIDO / Collect</td>
+	<td width="488" align="center" class="style4">&nbsp;</td>
+  </tr>
+ <tr>
+    <td class="style4" align="center" colspan="2">Cargos por Peso</td>
+	<td class="style4" align="center" colspan="2">Otros Cargos</td>
+ </tr>
+  <tr>
+    <td class="style4" align="center" bgcolor="#999999"><input type="text" class="style10" name="TotChargeWeightPrepaid" readonly></td>
+    <td class="style4" align="center" bgcolor="#999999"><input type="text" class="style10" name="TotChargeWeightCollect" readonly></td>
+	
+	<td width="488" rowspan="5" align="center" class="style4">
+	<table width="448">
+	<tr>
+		<td width="117" align="right" class="style4">
+			Terminal Fee
+		</td>
+		<td width="115" align="center" bgcolor="#999999" class="style4">
+			<input type="text" size="10" class="style10" name="TerminalFee" onKeyUp="res(this,numb);" onBlur="javascript:SumOtherCharges(document.forms[0]);CalcTax(document.forms[0]);CalcTot(document.forms[0]);">
+		</td>
+		<td width="68" align="right" class="style4">PBA</td>
+		<td width="128" align="center" bgcolor="#999999" class="style4">
+          <input type="text" size="10" class="style10" name="PBA" onBlur="javascript:ValPBA(document.forms[0]);" onKeyUp="res(this,numb);">
+</td>
+	</tr>
+	<tr>
+		<td align="right" class="style4">
+			Custom Fee
+		</td>
+		<td align="center" class="style4" bgcolor="#999999">
+			<input type="text" size="10" class="style10" name="CustomFee" onKeyUp="res(this,numb);" onBlur="javascript:SumOtherCharges(document.forms[0]);CalcTax(document.forms[0]);CalcTot(document.forms[0]);">
+		</td>
+		<td align="right" class="style4">
+			IVA
+		</td>
+		<td align="center" class="style4" bgcolor="#999999">
+			<input type="text" size="10" class="style10" name="TAX" onKeyUp="res(this,numb);"> 
+		</td>
+	</tr>
+	<tr>
+		<td align="right" class="style4">
+			Fuel Surcharge
+		</td>
+		<td align="center" class="style4" bgcolor="#999999">
+			<input type="text" size="10" class="style10" name="FuelSurcharge" onKeyUp="res(this,numb);" onBlur="javascript:SumOtherCharges(document.forms[0]);CalcTax(document.forms[0]);CalcTot(document.forms[0]);">
+		</td>
+		<td align="right" class="style4">
+			<input type="text" size="10" class="style10" name="AdditionalChargeName1">
+		</td>
+		<td align="center" class="style4" bgcolor="#999999">
+			<input type="text" size="10" class="style10" name="AdditionalChargeVal1" onKeyUp="res(this,numb);" onBlur="javascript:SumOtherCharges(document.forms[0]);CalcTax(document.forms[0]);CalcTot(document.forms[0]);">
+		</td>
+	</tr>
+	<tr>
+		<td align="right" class="style4">
+			Security Fee
+		</td>
+		<td align="center" class="style4" bgcolor="#999999">
+			<input type="text" size="10" class="style10" name="SecurityFee" onKeyUp="res(this,numb);" onBlur="javascript:SumOtherCharges(document.forms[0]);CalcTax(document.forms[0]);CalcTot(document.forms[0]);">
+		</td>
+		<td align="right" class="style4">
+			<input type="text" size="10" class="style10" name="AdditionalChargeName2">
+		</td>
+		<td align="center" class="style4" bgcolor="#999999">
+			<input type="text" size="10" class="style10" name="AdditionalChargeVal2" onKeyUp="res(this,numb);" onBlur="javascript:SumOtherCharges(document.forms[0]);CalcTax(document.forms[0]);CalcTot(document.forms[0]);">
+		</td>
+	</tr>
+	</table>
+	</td>
+	
+	
+  </tr>
+ <tr>
+    <td class="style4" align="center" colspan="2">Cargos por Valor</td>
+ </tr>
+  <tr>
+    <td class="style4" align="center" bgcolor="#999999"><input type="text" class="style10" name="TotChargeValuePrepaid" readonly></td>
+    <td class="style4" align="center" bgcolor="#999999"><input type="text" class="style10" name="TotChargeValueCollect" readonly></td>
+  </tr>
+   <tr>
+    <td class="style4" align="center" colspan="2">Impuestos</td>
+ </tr>
+  <tr>
+    <td class="style4" align="center" bgcolor="#999999"><input type="text" class="style10" name="TotChargeTaxPrepaid" readonly></td>
+    <td class="style4" align="center" bgcolor="#999999"><input type="text" class="style10" name="TotChargeTaxCollect" readonly></td>
+  </tr>
+   <tr>
+    <td class="style4" align="center" colspan="2">Total Otros Cargos a Pagar al Agente</td>
+	<td class="style4" align="center" rowspan="4" bgcolor="#999999">&nbsp;</td>
+ </tr>
+  <tr>
+    <td class="style4" align="center" bgcolor="#999999"><input type="text" class="style10" name="AnotherChargesAgentPrepaid" readonly></td>
+    <td class="style4" align="center" bgcolor="#999999"><input type="text" class="style10" name="AnotherChargesAgentCollect" readonly></td>
+  </tr>
+  <tr>
+    <td class="style4" align="center" colspan="2">Total Otros Cargos a Pagar al Transportista</td>
+ </tr>
+  <tr>
+    <td class="style4" align="center" bgcolor="#999999"><input type="text" class="style10" name="AnotherChargesCarrierPrepaid" readonly></td>
+    <td class="style4" align="center" bgcolor="#999999"><input type="text" class="style10" name="AnotherChargesCarrierCollect" readonly></td>
+  </tr>
+  <tr>
+    <td class="style4" align="center">TOTAL PAGADO</td>
+    <td class="style4" align="center">TOTAL DEBIDO</td>
+	<td class="style4" align="center" rowspan="2">&nbsp;</td>
+  </tr>
+
+  <tr>
+    <td class="style4" align="center" bgcolor="#999999"><input type="text" class="style10" name="TotPrepaid" readonly></td>
+    <td class="style4" align="center" bgcolor="#999999"><input type="text" class="style10" name="TotCollect" readonly></td>
+  </tr>
+  
+</table>
+
+
+</form>
+
+</body>
+</html>	
